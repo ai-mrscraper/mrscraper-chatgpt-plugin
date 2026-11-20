@@ -87,9 +87,9 @@ dashboard.
 - The review test cases use the new tools and include JSON extraction and
   brand cases. OpenAI accepts exactly five positive cases, so `status` is no
   longer one of them. The listing adds the two new capabilities.
-- MrScraper MCP 0.5.0 asks for `scraper:read` (scraping and search) and
-  `account:read` (`status`). Connections authorized with the older
-  `scrape:read` and `scrape:write` scopes must be authorized again.
+- MrScraper MCP 0.5.0 asks for `scrape:read` (scraping and search) and
+  `account:read` (`status`). Connections that already hold `scrape:read` keep
+  working; `scrape:write` is no longer needed.
 
 ## Changes in 0.3.2
 
