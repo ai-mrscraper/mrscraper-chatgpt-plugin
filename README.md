@@ -82,10 +82,11 @@ dashboard.
   `super` or `proxy` input, and a call that sets one is rejected; they send no
   proxy country unless the user sets `proxyCountry` (MCP 0.5.1).
 - The skills are MrScraper's canonical MCP skills with this plugin's review
-  rules. The page skill covers only page-loading and output inputs and leaves
-  the others at their defaults. It reads only public pages the user is allowed
-  to read, never signs in, and stops and tells the user when a site refuses the
-  request or requires signing in.
+  rules. The page skill documents exactly the page inputs ChatGPT and Codex
+  get from MCP 0.5.1: everything except `super` and `proxy`, with
+  `proxyCountry` unset unless the page differs by country. It reads only
+  public pages the user is allowed to read, never signs in, and stops and
+  tells the user when a site refuses the request or requires signing in.
 - The review test cases use the new tools and include JSON extraction and
   brand cases. OpenAI accepts exactly five positive cases, so `status` is no
   longer one of them. The listing adds the two new capabilities.
