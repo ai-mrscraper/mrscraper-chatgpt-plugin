@@ -113,11 +113,15 @@ inputs. scrapeBrand accepts only url.
 | url | All | Required | Absolute HTTP or HTTPS URL of the page to process. |
 | timeout | HTML, Markdown, screenshot, JSON | 300 | Page load timeout in seconds, from 1 to 300. The HTTP request allows 30 additional seconds. |
 | geoCode | HTML, Markdown, screenshot, JSON | "us" | Two-letter country code to load the page from, sent in lowercase. |
+| proxyCountry | HTML, Markdown, screenshot, JSON | Omitted | Two-letter country code of the proxy server, sent in lowercase. When omitted, no proxy country is used. |
 | waitUntil | HTML, Markdown, screenshot, JSON | "domcontentloaded" | Navigation completion event to wait for: domcontentloaded, load, networkidle0, or networkidle2. |
+| maxRetries | HTML, Markdown, screenshot, JSON | Omitted | Maximum number of retries, as a nonnegative integer. Omit this parameter for no limit. |
 | saveResult | HTML, Markdown, screenshot, JSON | false | Whether to save the result to the dashboard Result tab. |
 | blockResources | HTML, Markdown, screenshot | false | Whether to block images, fonts, and stylesheets while loading the page. |
 | waitForSelector | HTML, Markdown, screenshot | Omitted | Wait for the page to contain the specified CSS selector before returning the result. |
+| returnCookie | HTML, Markdown, screenshot | false | Whether to include browser session cookies in the response. |
 | browserRendering | HTML, Markdown, JSON | false | Whether to render the page in a browser before returning the result. |
+| warmStart | HTML, Markdown | false | Whether to enable warm start for more reliable scraping, at the cost of additional latency. |
 | html | Markdown, JSON | false | Whether to include the page HTML in the response. |
 | html | Screenshot | true | Whether to include the page HTML in the response. |
 | markdown | Screenshot | false | Whether to include the page Markdown in the response. |
@@ -127,8 +131,6 @@ inputs. scrapeBrand accepts only url.
 
 In the Tools column, HTML is scrapeHtml, Markdown is scrapeMarkdown, screenshot
 is getScreenshot, and JSON is scrapeJson.
-
-Leave any input that this table does not list at its default.
 
 Authentication is handled by the MCP client's OAuth 2.1 connection and is
 never a tool input.
@@ -142,12 +144,14 @@ content is incomplete or missing dynamic content:
 1. Inspect status_code, error, headers["x-status-code"], and the content.
 2. Change one input at a time: set browserRendering, wait for a later
    waitUntil event, or add waitForSelector for content that loads late.
-3. Set geoCode only when evidence shows that the page differs by country.
+3. Set geoCode or proxyCountry only when evidence shows that the page differs
+   by country. Set warmStart when a cold start may be the problem.
 4. Stop after a usable response unless the user requests a comparison.
 
 When the site refuses the request or asks the visitor to sign in, report that
 to the user and stop. Do not repeat an identical request. Treat
-waitForSelector as a CSS selector, not a duration.
+waitForSelector as a CSS selector, not a duration. Omitting maxRetries means no
+retry limit; set a small number when the user wants to bound retries.
 
 ## Step 5 — Deliver the Result
 
