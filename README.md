@@ -75,10 +75,12 @@ dashboard.
 
 ## Changes in 0.4.0
 
-- The plugin follows MrScraper MCP server 0.5.0 and its seven standard tools.
+- The plugin follows MrScraper MCP server 0.5.1 and its seven standard tools.
   `scrapeHtml`, `scrapeMarkdown`, and `getScreenshot` replace `scraperAPI`;
   `scrapeBrand` and `scrapeJson` are new; and `webSearch` takes `query`,
-  `country`, and `numResults`.
+  `country`, and `numResults`. In ChatGPT and Codex the page tools take no
+  `proxy`, `proxyCountry`, `super`, `maxRetries`, `returnCookie`, or
+  `warmStart` input (MCP 0.5.1); a call that sets one is rejected.
 - The skills are MrScraper's canonical MCP skills with this plugin's review
   rules. The page skill covers only page-loading and output inputs and leaves
   the others at their defaults. It reads only public pages the user is allowed
@@ -87,7 +89,7 @@ dashboard.
 - The review test cases use the new tools and include JSON extraction and
   brand cases. OpenAI accepts exactly five positive cases, so `status` is no
   longer one of them. The listing adds the two new capabilities.
-- MrScraper MCP 0.5.0 asks for `scrape:read` (scraping and search) and
+- MrScraper MCP 0.5.1 asks for `scrape:read` (scraping and search) and
   `account:read` (`status`). Connections that already hold `scrape:read` keep
   working; `scrape:write` is no longer needed.
 
