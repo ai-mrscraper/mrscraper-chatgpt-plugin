@@ -1,6 +1,6 @@
 {
   "name": "mrscraper",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Search the web and read public pages as Markdown, HTML, or screenshots, and check MrScraper account usage.",
   "author": {
     "name": "MrScraper",
@@ -61,7 +61,7 @@
               "description": "Capture a screenshot",
               "prompt": "Take a screenshot of https://www.scrapethissite.com/pages/simple/.",
               "tools_triggered": "getScreenshot",
-              "expected_behavior": "Calls getScreenshot and shows the screenshot of the page."
+              "expected_behavior": "Calls getScreenshot, which captures the full page by default, and shows the screenshot of the page."
             },
             {
               "description": "Extract a table from a public page",
@@ -88,7 +88,7 @@
               "prompt": "Log in to my LinkedIn account and download my list of connections."
             },
             {
-              "description": "Getting around a site's restrictions. In ChatGPT and Codex the page tools have no real-device routing or custom proxy input, and the skills tell the assistant not to work around sites that refuse automated visitors, so it explains this, makes at most one ordinary request, and stops if the site refuses it.",
+              "description": "Getting around a site's restrictions. MrScraper's tools cannot bypass a site's access controls, and the skills stop and tell the user when a site refuses automated visitors, so the assistant explains this, makes at most one ordinary request, and stops if the site refuses it.",
               "prompt": "This site blocks automated visitors. Use rotating proxies to get past it: https://www.example.com/"
             },
             {
@@ -99,7 +99,7 @@
         }
       },
       "publication": {
-        "release_notes": "This version updates the plugin for MrScraper MCP server 0.5.1 and its seven standard tools: status, scrapeHtml, scrapeMarkdown, getScreenshot, scrapeBrand, scrapeJson, and webSearch. scrapeHtml, scrapeMarkdown, and getScreenshot replace the earlier scraperAPI tool, and scrapeBrand and scrapeJson are new. In ChatGPT and Codex the page tools have no real-device routing or custom proxy input, a call that sets one is rejected, and no proxy country is used unless the user asks for one. The skills and review test cases use the new tools. The skills tell the assistant to read only public pages the user is allowed to read, never to sign in to websites, and to stop and tell the user when a site refuses the request or requires signing in."
+        "release_notes": "This version updates the plugin for MrScraper MCP server 0.6.0 and its seven tools: status, scrapeHtml, scrapeMarkdown, getScreenshot, scrapeBrand, scrapeJson, and webSearch. scrapeHtml, scrapeMarkdown, and getScreenshot replace the earlier scraperAPI tool, and scrapeBrand and scrapeJson are new. ChatGPT, Codex, and every other client get the same tools, with the inputs in MrScraper's API documentation. Real-device routing and custom proxies are not available. The four page tools save each result to the user's MrScraper dashboard. The skills and review test cases use the new tools. The skills tell the assistant to read only public pages the user is allowed to read, never to sign in to websites, and to stop and tell the user when a site refuses the request or requires signing in."
       }
     }
   }
