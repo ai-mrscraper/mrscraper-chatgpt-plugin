@@ -37,9 +37,9 @@ The server exposes seven tools:
 | Tool | Description |
 | --- | --- |
 | `status` | Return the raw account status API response without summarizing, redacting body fields, or adding calculated fields. |
-| `scrapeHtml` | Retrieve the raw HTML of a page. Browser rendering is optional. |
-| `scrapeMarkdown` | Retrieve a page as Markdown. Including HTML also enables browser rendering and returns both outputs as JSON. |
-| `getScreenshot` | Capture a base64 screenshot of the full page or top viewport. Browser rendering is always enabled. |
+| `scrapeHtml` | Retrieve the raw HTML of a page. Browser rendering and a screenshot are optional. |
+| `scrapeMarkdown` | Retrieve a page as Markdown. Browser rendering is optional. |
+| `getScreenshot` | Capture a base64 PNG screenshot of the full page, the top viewport, or a custom viewport size. Browser rendering is always enabled. |
 | `scrapeBrand` | Extract a website's colors, typography, logos, and social links as JSON. |
 | `scrapeJson` | Extract structured JSON from a page using a natural-language prompt. Append Json Schema: and a JSON schema to shape the output. |
 | `webSearch` | Search the web and return ranked results with titles, URLs, descriptions, and sources. |
@@ -73,20 +73,43 @@ them from the ZIP and shows them read-only, so change them in the manifest and
 upload a new version. The demo video URL and reviewer credentials stay in the
 dashboard.
 
+## Changes in 0.4.1
+
+- The plugin follows MrScraper MCP server 0.6.0, which gives ChatGPT, Codex,
+  and every other client the same seven tools with the inputs in MrScraper's
+  API documentation. Real-device routing and custom proxies are not
+  available.
+- The page skill lists each page tool's inputs with the documented
+  descriptions. An input left out is not sent, so MrScraper's own default
+  applies. It documents `maxAge` (reuse a cached result; 0, a fresh scrape, is
+  sent when it is left out), the `screenshot` on `scrapeHtml`, viewport sizes
+  on `getScreenshot`, and `scrapeJson`'s `html` (on by default) and
+  page-loading inputs. Retries use `browserRendering` for JavaScript pages,
+  `waitForSelector`, `timeout`, `warmStart`, `geoCode` for country-specific
+  pages, `maxRetries`, and `maxAge`. The review rules are unchanged: public
+  pages only, never sign in, and stop and tell the user when a site refuses
+  the request or requires signing in. The router and search skills are the
+  canonical ones.
+- The four page tools always save their result to the user's MrScraper
+  dashboard (`saveResult` is no longer an input), which is why they are not
+  annotated read-only. `scrapeBrand` and `webSearch` save nothing.
+- The release notes and the restrictions negative case describe MCP 0.6.0,
+  and the screenshot case expects the full page, `getScreenshot`'s default.
+- 0.4.0 was uploaded to the OpenAI dashboard as a draft on 23 Nov 2026;
+  0.4.1 replaces it.
+
 ## Changes in 0.4.0
 
 - The plugin follows MrScraper MCP server 0.5.1 and its seven standard tools.
   `scrapeHtml`, `scrapeMarkdown`, and `getScreenshot` replace `scraperAPI`;
   `scrapeBrand` and `scrapeJson` are new; and `webSearch` takes `query`,
-  `country`, and `numResults`. In ChatGPT and Codex the page tools take no
-  `super` or `proxy` input, and a call that sets one is rejected; they send no
-  proxy country unless the user sets `proxyCountry` (MCP 0.5.1).
+  `country`, and `numResults`. MCP 0.5.1 gave ChatGPT and Codex a smaller
+  set of page inputs than other clients.
 - The skills are MrScraper's canonical MCP skills with this plugin's review
-  rules. The page skill documents exactly the page inputs ChatGPT and Codex
-  get from MCP 0.5.1: everything except `super` and `proxy`, with
-  `proxyCountry` unset unless the page differs by country. It reads only
-  public pages the user is allowed to read, never signs in, and stops and
-  tells the user when a site refuses the request or requires signing in.
+  rules. The page skill documented exactly the page inputs ChatGPT and Codex
+  got from MCP 0.5.1. It reads only public pages the user is allowed to read,
+  never signs in, and stops and tells the user when a site refuses the
+  request or requires signing in.
 - The review test cases use the new tools and include JSON extraction and
   brand cases. OpenAI accepts exactly five positive cases, so `status` is no
   longer one of them. The listing adds the two new capabilities.
