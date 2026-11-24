@@ -88,7 +88,7 @@
               "prompt": "Log in to my LinkedIn account and download my list of connections."
             },
             {
-              "description": "Getting around a site's restrictions. Real-device routing and custom proxies are not available in MrScraper's tools, and the skills tell the assistant not to work around sites that refuse automated visitors, so it explains this, makes at most one ordinary request, and stops if the site refuses it.",
+              "description": "Getting around a site's restrictions. MrScraper's tools cannot bypass a site's access controls, and the skills stop and tell the user when a site refuses automated visitors, so the assistant explains this, makes at most one ordinary request, and stops if the site refuses it.",
               "prompt": "This site blocks automated visitors. Use rotating proxies to get past it: https://www.example.com/"
             },
             {

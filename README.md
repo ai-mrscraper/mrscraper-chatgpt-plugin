@@ -73,92 +73,11 @@ them from the ZIP and shows them read-only, so change them in the manifest and
 upload a new version. The demo video URL and reviewer credentials stay in the
 dashboard.
 
-## Changes in 0.4.1
-
-- The plugin follows MrScraper MCP server 0.6.0, which gives ChatGPT, Codex,
-  and every other client the same seven tools with the inputs in MrScraper's
-  API documentation. Real-device routing and custom proxies are not
-  available.
-- The page skill lists each page tool's inputs with the documented
-  descriptions. An input left out is not sent, so MrScraper's own default
-  applies. It documents `maxAge` (reuse a cached result; 0, a fresh scrape, is
-  sent when it is left out), the `screenshot` on `scrapeHtml`, viewport sizes
-  on `getScreenshot`, and `scrapeJson`'s `html` (on by default) and
-  page-loading inputs. Retries use `browserRendering` for JavaScript pages,
-  `waitForSelector`, `timeout`, `warmStart`, `geoCode` for country-specific
-  pages, `maxRetries`, and `maxAge`. The review rules are unchanged: public
-  pages only, never sign in, and stop and tell the user when a site refuses
-  the request or requires signing in. The router and search skills are the
-  canonical ones.
-- The four page tools always save their result to the user's MrScraper
-  dashboard (`saveResult` is no longer an input), which is why they are not
-  annotated read-only. `scrapeBrand` and `webSearch` save nothing.
-- The release notes and the restrictions negative case describe MCP 0.6.0,
-  and the screenshot case expects the full page, `getScreenshot`'s default.
-- 0.4.0 was uploaded to the OpenAI dashboard as a draft on 23 Nov 2026;
-  0.4.1 replaces it.
-
-## Changes in 0.4.0
-
-- The plugin follows MrScraper MCP server 0.5.1 and its seven standard tools.
-  `scrapeHtml`, `scrapeMarkdown`, and `getScreenshot` replace `scraperAPI`;
-  `scrapeBrand` and `scrapeJson` are new; and `webSearch` takes `query`,
-  `country`, and `numResults`. MCP 0.5.1 gave ChatGPT and Codex a smaller
-  set of page inputs than other clients.
-- The skills are MrScraper's canonical MCP skills with this plugin's review
-  rules. The page skill documented exactly the page inputs ChatGPT and Codex
-  got from MCP 0.5.1. It reads only public pages the user is allowed to read,
-  never signs in, and stops and tells the user when a site refuses the
-  request or requires signing in.
-- The review test cases use the new tools and include JSON extraction and
-  brand cases. OpenAI accepts exactly five positive cases, so `status` is no
-  longer one of them. The listing adds the two new capabilities.
-- MrScraper MCP 0.5.1 asks for `scrape:read` (scraping and search) and
-  `account:read` (`status`). Connections that already hold `scrape:read` keep
-  working; `scrape:write` is no longer needed.
-
-## Changes in 0.3.2
-
-- Added the review test cases and release notes to the manifest. The
-  dashboard now requires the test cases to come from the ZIP.
-
-## Changes in 0.3.1
-
-- The plugin connects to `https://mcp.mrscraper.com/mcp` again. OpenAI's
-  plugin directory doesn't allow an existing plugin to change its MCP URL.
-  MrScraper MCP 0.4.1 gives ChatGPT and Codex sign-ins on `/mcp` the same
-  page-loading-only `scraperAPI` as `/mcp/chatgpt`.
-
-## Changes in 0.3.0
-
-- The plugin connects to `https://mcp.mrscraper.com/mcp/chatgpt` instead of
-  `/mcp`. That endpoint uses the same sign-in, and its `scraperAPI` has only
-  page-loading options.
-- The listing describes web search and reading public pages for research. It
-  no longer mentions Google or developer data pipelines, and it moved from
-  `Developer Tools` to `Productivity`.
-- The skills follow MrScraper MCP 0.3.0: `webSearch` returns a ranked list and
-  takes `num_results`. The page skill covers only the endpoint's options and
-  tells the agent to stop when a site refuses the request or requires signing
-  in.
-
 The privacy-policy URL points to the published policy at
 <https://mrscraper.com/privacy-policy>. A new ZIP does not update that page.
 Before resubmitting, ensure the published policy covers MCP inputs, scraped
 content, backend model processing, recipient categories, retention timelines,
 and available user controls.
-
-### Privacy-policy preview package
-
-`mrscraper-0.1.5-privacy-preview.zip` is a separate metadata-check package. It
-changes only the embedded version (`0.1.5`) and `privacyPolicyURL` from version
-`0.1.4`, pointing to the proposed policy at
-<https://mrscraper-privacy-preview-20261005.subscriptions-7de.workers.dev/privacy-policy>.
-The production policy and source manifest remain unchanged. The preview is
-deployed from landing-v3's isolated `preview/privacy-policy-20261005` branch;
-do not merge that branch's preview-only deployment workflow into `develop`.
-After publishing the approved policy, package the permanent URL with a newer
-version and run the final checks. A successful preview check is not approval.
 
 ## Development validation
 
